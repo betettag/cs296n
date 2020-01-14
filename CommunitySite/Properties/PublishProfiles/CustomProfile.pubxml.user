@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXprS68K0bEajLu/utzGOpAAAAAACAAAAAAAQZgAAAAEAACAAAAC2fewGrBaccE9qcxp2z0WvEWuGJriHFJtsYRlcHW+WiQAAAAAOgAAAAAIAACAAAAC1WGiIgcdMDY8H5eRVNg96o9JXcVEmgznNjyJlV8Ff+yAAAABgYFWBOfSCEIuzZyyppisTxl14P972yHP+GfaTuQTd3kAAAACmlQ/DdAO0S4TTjIgzfsShdKmfoIzwFr9W26k/leep6cxQyCulGSbvLQjX9HySoHCWpIR0ao+zm3VxQs6qKDs2</EncryptedPassword>
-    <_PublishTargetUrl>ftp://ftp.site4now.net/site1</_PublishTargetUrl>
+    <_PublishTargetUrl>ftp://ftp.site4now.net/root\home\betettag-001\www\site1</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="appsettings.Development.json">
@@ -34,5 +34,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Devart.Data.dll">
       <publishTime>09/12/2019 03:13:56</publishTime>
     </File>
+  </ItemGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="SanMsSqlConnection">
+      <Value>Data Source=SQL5047.site4now.net%3bInitial Catalog=DB_A4F9C1_CommunitySite%3bUser Id=DB_A4F9C1_CommunitySite_admin%3bPassword=password123%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="CommunitySite.Repositories.AppDbContext">
+      <Value>Data Source=SQL5047.site4now.net%3bInitial Catalog=DB_A4F9C1_CommunitySite%3bUser Id=DB_A4F9C1_CommunitySite_admin%3bPassword=password123%3b</Value>
+    </EFMigrations>
   </ItemGroup>
 </Project>

@@ -7,40 +7,32 @@ namespace CommunitySite.Repositories
 {
     public class TopicRepo : ITopicRepo
     {
-        public static List<Topic> topics = new List<Topic>();
+        private AppDbContext context;
         //public IQueryable<Topic>getTopics = topics.AsQueryable().Include("Comments");
         // IQuerable objects can pass on a query to the Db instead of returing a colleciton that has to be filtered
-        public List<Topic> Topics => topics;
-
-
-        public TopicRepo() 
+        public List<Topic> Topics
         {
-            //context = appDbContext;
-            if (Topics.Count == 0)
+            get
             {
-
-                Topic topic = new Topic
-                {
-                    Title = "Wellcome Future and Current Members!"
-                };
-                topic.Author = "admin";
-                topic.Body = "This is a message to congratulate our \"working\" forum. " +
-                             "Feel free to talk to others";
-
-                Topics.Add(topic);
+                return context.Topics.Include(t => t.Author).ToList();
             }
         }
 
 
-        public void AddTopic(Topic topic) => topics.Add(topic);
-
-        public void AddComment(Topic topic, Message comment)
+        public TopicRepo(AppDbContext appDbContext) 
         {
-            topic.Comments.Add(comment);
-            //int index = topics.FindIndex(t => t.Title == topic.Title);
-            //topics[index] = topic;
-            //context.SaveChanges();
+            context = appDbContext;
         }
+
+
+        public void AddTopic(Topic topic) {
+            if (topic.Author != null)
+            {
+                context.Topics.Add(topic);
+                context.SaveChanges();
+            }
+        }
+
 
         public Topic GetTopicByUser(string user)
         {
@@ -57,7 +49,16 @@ namespace CommunitySite.Repositories
         public Topic GetTopicByTitle(string title)
         {
             Topic topic;
-            topic = topics.First(t => t.Title == title);
+            topic = Topics.First(t => t.Title == title);
+            return topic;
+        }
+        public Topic GetComments(int TopicID)//get new and all comments form dbset/context
+        {
+            Topic topic = Topics.Find(t => t.TopicID == TopicID);
+            topic.Comments = context.Comments.Where(c => c.TopicTitle == TopicID.ToString() && c.Author.Guest==false)
+                .OrderBy(m => m.Important)
+                .Include(c => c.Author)
+            .ToList();
             return topic;
         }
 

@@ -26,7 +26,7 @@
 </head>
 <body>
     @Html.ValidationMessage("Validation")
-    <form class="form-signin" asp-action="Login" method="post">
+    <form class="form-signin" asp-action="NewTopicValidation" method="post">
         <div asp-validation-summary="All">
             <div class="text-center mb-4">
                 <img class="mb-4" src="https://i.barkpost.com/wp-content/uploads/2018/10/346A4220-1.jpg" alt="logo" width="72" height="72">
@@ -35,12 +35,12 @@
             </div>
 
             <div class="form-label-group">
-                <input asp-for="UserName" id="inputEmail4" class="form-control" placeholder="Username" required="" autofocus="">
-                <label for="inputEmail4" asp-for="UserName">Username: (nonadmin) </label>
+                <input asp-for="UserName" id="inputEmail4" class="form-control" placeholder="admin" required="" autofocus="">
+                <label for="inputEmail4" asp-for="UserName">Username: (Dave) </label>
             </div>
 
             <div class="form-label-group">
-                <input asp-for="Pass" id="inputPassword4" class="form-control" placeholder="Password" required="">
+                <input asp-for="Pass" id="inputPassword4" class="form-control" placeholder="pass" required="">
                 <label for="inputPassword4" asp-for="Pass">Password: (pass)</label>
             </div>
 

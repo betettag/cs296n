@@ -14,101 +14,187 @@ namespace CommunitySiteTests
     {
         ITopicRepo topicRepo = new FakeTopicRepo();
         IUserRepo userRepo = new FakeUserRepo();
-        IGuestRepo guestRepo = new FakeGuestRepo();
+        ICommentRepo commentRepo = new FakeCommentRepo();
         private void ArrangeTopics()
         {
             //Arrange
             topicRepo.Topics.Clear();
             userRepo.Users.Clear();
-            guestRepo.Responses.Clear();
+            commentRepo.Comments.Clear();
             User user = new User();
             user.UserName = "Test";
             user.Img = "https://www.bootdey.com/img/Content/avatar/avatar3.png";
             user.Info = "old man. likes yelling at kids";
-            user.Admin = false;
+            user.Admin = true;
+            user.Guest = false;
             user.Phone = "123-123 1234";
             user.Email = "test@email.com";
             user.Address = "Eugene, Oregon";
             userRepo.Users.Add(user);
-            Message message = new Message();
-            message.User = "test";
-            message.Important = true;
-            Message message2 = new Message();
-            message2.User = "test2";
-            message2.Important = false;
-            message2.PubDate = new DateTime(2016, 7, 15, 3, 15, 0);
+
+            User a = new User(true)
+            {
+                UserName = "admin",
+                Pass = "pass",
+                Img = "https://www.bootdey.com/img/Content/avatar/avatar5.png",
+                Phone = "123-123 1234",
+                Email = "test@email.com",
+                Address = "Eugene, Oregon",
+                Admin = true
+            };
+            userRepo.Users.Add(a);
+
+            User user2 = new User();
+            user2.UserName = "Test2";
+            user2.Admin = false;
+            user2.Guest = true;
+            userRepo.AddUser(user2);
+
+            User user3 = new User();
+            user3.UserName = "Test2";
+            user3.Admin = false;
+            user3.Guest = false;
+            userRepo.AddUser(user3);
+
+            //Guest User to be used with guest responses
+            User guest = new User(false)
+            {
+                UserName = "Guest",
+                Guest = true,
+                Pass = "pass",
+                Phone = "123-123 1234",
+                Email = "test@email.com",
+                Address = "Eugene, Oregon",
+                Img = "https://www.bootdey.com/img/Content/avatar/avatar4.png",
+                Admin = false
+            };
+            userRepo.AddUser(guest);
+
+
+
             Topic topic = new Topic
             {
                 Title = "Wellcome Future and Current Members!",
-                PubDate = new DateTime(2016, 7, 15, 3, 15, 0)
-        };
-            topic.Author = "past topic";
-            topic.Body = "This is a message to congratulate our \"working\" forum. " +
-                         "Feel free to talk to others";
+                PubDate = new DateTime(2016, 7, 15, 3, 15, 0),
+                Author = user,
+                Body = "This is a message to congratulate our \"working\" forum. " +
+                         "Feel free to talk to others"
+            };
+            topicRepo.AddTopic(topic);
 
-            topicRepo.Topics.Add(topic);
             Topic topic2 = new Topic
             {
-                Title = "Test Topic"
+                Title = "Test Topic",
+                Author = user,
+                Body = "This is a message to congratulate our \"working\" forum. " +
+                         "Feel free to talk to others"
 
             };
-            topic2.Author = "current topic";
-            topic2.Body = "This is a message to congratulate our \"working\" forum. " +
-                         "Feel free to talk to others";
+            topicRepo.AddTopic(topic2);
 
-            topicRepo.Topics.Add(topic2);
-            topicRepo.Topics[0].Comments.Add(message);
-            topicRepo.Topics[0].Comments.Add(message2);
+            Message message = new Message();
+            message.User = "test";
+            message.Important = true;
+            message.Author = user;
+            commentRepo.AddComment(message);
+
+            Message message2 = new Message();
+            message2.User = "test2";
+            message2.Important = false;
+            message2.TopicTitle = topic.Title;
+            message2.Author = user;
+            message2.PubDate = new DateTime(2016, 7, 15, 3, 15, 0);
+            commentRepo.AddComment(message2);
         }
         [Fact]
         public void IndexTest()
         {
             //Arrange
             ArrangeTopics();
-            ForumController forumController = new ForumController(userRepo, topicRepo,guestRepo);
+            ForumController forumController = new ForumController(userRepo, topicRepo,commentRepo);
             //Act
-            forumController.Index();
+            var forum = forumController.Index(userRepo.Users[0]) as ViewResult;//user is not important
             //Assert
-            Assert.True(topicRepo.Topics.First().Author == "past topic");
-            Assert.False(topicRepo.Topics.First().Author == "current topic");
-            Assert.False(topicRepo.Topics[0].Comments.First().User == "test");
-            Assert.True(topicRepo.Topics[0].Comments.First().User == "test2");
+            Assert.True(topicRepo.Topics.First().Author.UserName == "Test");
+            Assert.True(topicRepo.Topics.First().PubDate == new DateTime(2016, 7, 15, 3, 15, 0));
+            Assert.NotEqual(topicRepo.Topics, forum.ViewData["Topics"]);
+            Assert.NotEqual(userRepo.Users[0], forum.ViewData["user"]);
+
         }
         [Fact]
-        public void NewMessageTestPost()
+        public void NewMessageTest2()
         {
             //Arrange
             ArrangeTopics();
-            ForumController forumController = new ForumController(userRepo, topicRepo, guestRepo);
+            ForumController forumController = new ForumController(userRepo, topicRepo, commentRepo);
             Message message = new Message();
-            message.User = userRepo.Users[0].UserName;
-            message.TopicTitle = topicRepo.Topics[1].Title;
-            Message message2 = new Message();
-            message2.User = "test";
-            message2.TopicTitle = topicRepo.Topics[1].Title;
+            message.User = "1";
+            userRepo.Users[0].UserID = 1;
+            var prevValue = commentRepo.Comments.Count();
+
 
             //Act
-            forumController.NewMessage(message);
-            forumController.NewMessage(message2);//fail message
+            var newmsg = forumController.NewMessage(message) as ViewResult;
             //Assert
-            Assert.True(topicRepo.Topics[1].Comments[0].Equals(message));
-            Assert.True(topicRepo.Topics[1].Comments.Count() == 1);
+            Assert.Equal(commentRepo.Comments[2].User, message.User);
+            Assert.NotEqual(commentRepo.Comments.Count(), prevValue); //adds comment
+
+            //Arrange
+            Message message2 = new Message();
+            message2.User = "2";
+            prevValue = commentRepo.Comments.Count();
+            //Act
+            var newmsg2 = forumController.NewMessage(message2) as ViewResult;
+            //Assert
+            Assert.Equal(commentRepo.Comments.Count(), prevValue);//comments dont change
         }
         [Fact]
         public void NewMessageTest()
         {
             //Arrange
             ArrangeTopics();
-            ForumController forumController = new ForumController(userRepo, topicRepo, guestRepo);
-            string goodTitle = topicRepo.Topics[0].Title;
-            string badTitle = "badTitle";
+            ForumController forumController = new ForumController(userRepo, topicRepo, commentRepo);
+
+            userRepo.Users[0].UserID = 1;
             //Act
-            forumController.NewMessage(goodTitle);
+            var newMsg = forumController.NewMessage(userRepo.Users[0]) as ViewResult;
 
             //Assert
-            Assert.Throws<Exception>(()=>forumController.NewMessage(badTitle));
-            Assert.NotNull(forumController.NewMessage(goodTitle));
+            Assert.Equal(newMsg.Model.GetType(),new Message().GetType());
+
+            //arrange
+            userRepo.Users[0].UserID = 0;
+            //Act
+            var newMsg2 = forumController.NewMessage(userRepo.Users[0]) as ViewResult;
+
+            //Assert
+            Assert.NotEqual(newMsg2.Model, userRepo.Users[0]);
         }
+
+        [Fact]
+        public void NewMessageVal()
+        {
+            //Arrange
+            ArrangeTopics();
+            ForumController forumController = new ForumController(userRepo, topicRepo, commentRepo);
+
+            userRepo.Users[0].UserID = 1;
+            //Act
+            var newMsg = forumController.NewMsgValidation(userRepo.Users[0]) as ViewResult;
+
+            //Assert
+            Assert.Equal(newMsg.Model.GetType(), new Message().GetType());
+
+
+            //arrange
+            User user = new User();
+            //Act
+            var newMsg2 = forumController.NewMsgValidation(user) as ViewResult;
+
+            //Assert
+            Assert.NotEqual(newMsg2.Model.GetType(), new Message().GetType());
+        }
+
         [Fact]
         public void NewTopicTest()
         {
@@ -117,18 +203,25 @@ namespace CommunitySiteTests
             Topic testTopic = new Topic
             {
                 Title = "TestTitle",
-                Author = "TestAuthor",
+                Author = userRepo.Users[0],
                 Body = "TestBody"
             };
-            Topic testTopic2 = new Topic();
-            ForumController forumController = new ForumController(userRepo, topicRepo, guestRepo);
-            var prevValue = topicRepo.Topics.Count();
+            ForumController forumController = new ForumController(userRepo, topicRepo, commentRepo);
+            var prevCount = topicRepo.Topics.Count();
             //Act
-            forumController.NewTopic(testTopic);
-            forumController.NewTopic(testTopic2);
+            var testTitle = forumController.NewTopic(testTopic) as ViewResult ;
+            
             //Assert
-            Assert.Equal(topicRepo.Topics[2], testTopic);
-            Assert.True(topicRepo.Topics.Count() != prevValue);
+            Assert.True(prevCount!=topicRepo.Topics.Count());
+
+            //arrange
+            Topic testTopic2 = new Topic();
+            prevCount = topicRepo.Topics.Count();
+            //act
+            var testTitle2 = forumController.NewTopic(testTopic2) as ViewResult;
+
+            Assert.Equal(testTitle2.Model.GetType(), testTopic2.GetType());
+            Assert.True(topicRepo.Topics.Count() == prevCount);
         }
     }
 }

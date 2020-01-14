@@ -9,19 +9,17 @@ namespace CommunitySite.Models
 {
     public class User
     {
-        //private List<Topic> topics = new List<Topic>();
-        //private List<Message> comments = new List<Message>();
         public User(bool flag)
         {
             if (flag)
                 Admin = flag;
             JoinDate = DateTime.Now;
         }
-        public int UserID { get; set; }
-        public User() {
+        public User()
+        {
             JoinDate = DateTime.Now;
-            Guest = true;
         }
+        public int UserID { get; set; }
         public string Email { get; set; }
         public bool Guest { get; set; }
         public DateTime JoinDate { get; set; }
@@ -34,9 +32,7 @@ namespace CommunitySite.Models
         public string Info { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        //finds user messages from string
-        //public ICollection<Message> Replies { get { return MessageRepo.UserMsgs(Name); } }
-        //public ICollection<Message> Msg { get { return comments; } }
+        public string ReplyingTo { get; set; }
 
     }
 }

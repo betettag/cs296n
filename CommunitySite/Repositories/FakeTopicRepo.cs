@@ -22,17 +22,9 @@ namespace CommunitySite.Repositories
 
         public void AddTopic(Topic topic) => topics.Add(topic);
 
-        public void AddComment(Topic topic, Message comment)
-        {
-            topic.Comments.Add(comment);
-            int index = topics.FindIndex(t => t.Title == topic.Title);
-            topics[index] = topic;
-            //context.SaveChanges();
-        }
-
         public Topic GetTopicByUser(string user)
         {
-            int topicIndex = Topics.FindIndex(t => t.Author == user);
+            int topicIndex = Topics.FindIndex(t => t.Author.UserName == user);
             return topics[topicIndex];
         }
         public Topic GetTopicByID(int ID)
@@ -47,6 +39,15 @@ namespace CommunitySite.Repositories
             topic = topics.First(t => t.Title == title);
             return topic;
         }
-
+        public Topic GetComments(int TopicID)
+        {
+            Topic topic = Topics.Find(t => t.TopicID == TopicID);
+            FakeCommentRepo commentRepo = new FakeCommentRepo();
+            List<Message>comments = commentRepo.Comments;
+            topic.Comments = comments.Where(c => c.TopicTitle == TopicID.ToString())
+                .OrderBy(m => m.Important)
+                .ToList();
+            return topic;
+        }
     }
 }

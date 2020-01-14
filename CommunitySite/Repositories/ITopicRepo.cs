@@ -9,9 +9,9 @@ namespace CommunitySite.Repositories
         //IQueryable<Topic> Topics { get; }
         List<Topic> Topics { get; }
         void AddTopic(Topic topic);
-        void AddComment(Topic topic, Message comment);
         Topic GetTopicByUser(string user);
         Topic GetTopicByID(int ID);
         Topic GetTopicByTitle(string title);
+        Topic GetComments(int TopicID);
     }
 }

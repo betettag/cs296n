@@ -23,10 +23,20 @@
         
         <p class="text-center">these are seen by the administrators of the site</p>
         <form class="p-a-1" asp-action="RsvpForm" method="post">
+            
             <div asp-validation-summary="All"></div>
             <div class="form-group">
-                <label asp-for="User">Your Name:</label>
-                <input class="input-xlarge form-control" asp-for="User" />
+                @if (Model.Author.Guest == true)
+                {
+                    <label asp-for="User">Your Name:</label>
+                    <input class="input-xlarge form-control" asp-for="User" value=""/>
+                }
+                else
+                {
+                    <input asp-for="User" hidden value="@Model.Author.UserName" />
+                    <label>Posting as: @Model.Author.UserName</label>
+                }
+
             </div>
             <div class="form-group">
                 <label asp-for="Email">Your email:</label>

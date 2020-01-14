@@ -49,3 +49,5 @@ C:\Users\Admin\Desktop\cs295n\ASP.net-CommunitySite\CommunitySite\obj\Release\ne
 C:\Users\Admin\Desktop\cs295n\ASP.net-CommunitySite\CommunitySite\obj\Release\netcoreapp2.2\win-x86\Razor\Views\Home\CreateUser.cshtml.g.cs
 C:\Users\Admin\Desktop\cs295n\ASP.net-CommunitySite\CommunitySite\obj\Release\netcoreapp2.2\win-x86\Razor\Views\Lab6\index.cshtml.g.cs
 C:\Users\Admin\Desktop\cs295n\ASP.net-CommunitySite\CommunitySite\obj\Release\netcoreapp2.2\win-x86\Razor\Views\Lab6\Lab6.cshtml.g.cs
+C:\Users\Admin\Desktop\cs295n\ASP.net-CommunitySite\CommunitySite\bin\Release\netcoreapp2.2\win-x86\appsettings.Production.json
+C:\Users\Admin\Desktop\cs295n\ASP.net-CommunitySite\CommunitySite\obj\Release\netcoreapp2.2\win-x86\Razor\Views\Forum\CheckUser2.cshtml.g.cs

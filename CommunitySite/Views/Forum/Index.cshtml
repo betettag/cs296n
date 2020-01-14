@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model List<Topic>
+﻿@model CommunitySite.ViewModels.ForumIndexViewModel
 @{
     ViewData["Title"] = "C.O.D.E.C. Forum";
 }
@@ -19,37 +16,47 @@
     <div class="container text-center">
         <p class="text-left">
             <h3>Forum</h3><br />
-            <a class="btn btn-primary" asp-controller="Forum" asp-action="Login">Click Here To Add a Topic</a>
-            @if (Model.Count() != 0)
+            <a class="btn btn-primary" asp-controller="Forum" asp-action="NewTopicLogin" asp-route-user="@Model.user">Click Here To Add a Topic</a>
+            @if (Model.Topics.Count() != 0)
             {
-                @foreach (Topic t in Model)
+                @foreach (Topic t in Model.Topics)
                 {
                     <h4>@t.Title</h4>
                     @("Posted: " + t.PubDate) <br />
-                    @("Author: " + t.Author)<br />
+                    @("Author: " + t.Author.UserName)<br />
                     @("Message: " + t.Body) <br />
                     <br />
                     @if (t.Comments.Count != 0)
                     {
                         @(t.Comments.Count + " Replies: ")<br />
-                        //extra credit?
-                        
+
                         @foreach (Message m in t.Comments)
                         {
-                            @("User: " + m.User)<br />
+                            @("User: " + m.Author.UserName)<br />
                             @("Date: " + m.PubDate) <br />
                             @("Message: " + m.Body) <br />
                             <hr />
                         }
-                        string url = "NewMessage" + "?title=" + @t.Title;
-                        <a class="btn btn-primary" asp-route-title="@t.Title" asp-controller="Forum" asp-action="NewMessage">Comments</a>
-                    }
+                        //string url = "/Forum/NewMessage" + "?title=" + @t.Title;
+                        Model.user.ReplyingTo = t.TopicID.ToString();
+                        User user = Model.user;
+                        <a class="btn btn-primary" href="@Url.Action("NewMessage", "Forum", user)">
+                            Add a comment
+                        </a>
+                        <!--<a class="btn btn-primary" asp-route-user="@Model.user" asp-route-topic="@t" asp-controller="Forum" asp-action="NewMessage">Add a Comment</a>
+                        -->}
                     else
                     {
                         @("No replies yet. Be the first One!")<br />
-                        string url = "Forum/NewMessage" + "?title=" + @t.Title;
-                        <a class="btn btn-primary" asp-route-title="@t.Title" asp-controller="Forum" asp-action="NewMessage">Comments</a>
-                        <!--<a class="btn btn-primary" href="@url">Comments</a>-->
+                        string url = "/Forum/NewMessage" + "?title=" + @t.Title;
+                        Model.user.ReplyingTo = t.TopicID.ToString();
+                        User user = Model.user;
+                        <!--<a class="btn btn-primary" asp-route-user="@user" asp-route-topic="@t" asp-controller="Forum" asp-action="NewMessage">Add a Comment</a>
+                        -->
+                        <a class="btn btn-primary" href="@Url.Action("NewMessage", "Forum", user)">
+                            Add a comment
+                        </a>
+                        <!--<a class="btn btn-primary" href="@url">Add a Comment</a>-->
                     }
                 }
             }

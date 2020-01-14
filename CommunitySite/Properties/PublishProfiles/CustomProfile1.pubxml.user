@@ -8,4 +8,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXprS68K0bEajLu/utzGOpAAAAAACAAAAAAAQZgAAAAEAACAAAADxRNjRVntwcPcUzHSgbGo/wz8kijV9iS3nHkkd2abtngAAAAAOgAAAAAIAACAAAAAUqcdQLQM5IPA8IU1xL5RoFOISaVcxm4gc7nLadkp2/SAAAAAgiqpYfErFjxp4AtcIycIkjPDWNcWm+3GTU9iZhq1PjkAAAAC4GrCtjOiBr7Mf0NPo017fVycR7Ter2sjJHgnoQMLO5TOYrE/0XsZznb+sAOAprNNXtHD+2Nmwq0J6KtuvoZ+I</EncryptedPassword>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="SanMsSqlConnection">
+      <Value>Data Source=SQL5047.site4now.net%3bInitial Catalog=DB_A4F9C1_CommunitySite%3bUser Id=DB_A4F9C1_CommunitySite_admin%3bPassword=password123%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
 </Project>

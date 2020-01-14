@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunitySite.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommunitySite.Repositories
 {
@@ -10,7 +11,16 @@ namespace CommunitySite.Repositories
     {
         private static List<User> users = new List<User>();
 
-        public List<User> Users { get { return users; } }
+        public List<User> Users => users;
+        public FakeUserRepo()
+        {
+        }
+        public void AddUser(User user)
+        {
+            if(user != null)
+                Users.Add(user);
+        }
+
 
         public bool IsAdmin(string userName)
         {

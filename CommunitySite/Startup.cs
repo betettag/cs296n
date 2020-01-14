@@ -17,9 +17,13 @@ namespace CommunitySite
         {
             Configuration = configuration;
         }
-
+        private IHostingEnvironment environment;
         public IConfiguration Configuration { get; }
-
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        {
+            Configuration = configuration;
+            environment = env;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -34,24 +38,27 @@ namespace CommunitySite
 
             // Inject our repositories into our controllers
             services.AddTransient<ITopicRepo, TopicRepo>();
+            services.AddTransient<IUserRepo, UserRepo>();
+            services.AddTransient<ICommentRepo, CommentRepo>();
 
-            var os = RuntimeInformation.OSArchitecture;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                services.AddDbContext<AppDbContext>();
-                    //options => options.UseSqlServer(
-                        //Configuration.GetConnectionString("SqlServerConnection")));
-            }
-            else
-            {
-                services.AddDbContext<AppDbContext>();
-                    //options => options.UseMySql(
-                        //Configuration.GetConnectionString("MySqlConnection")));
-            }
+            // Configure EF for Windows with SQL Server
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
+                Configuration["ConnectionStrings:LocalDbConnection"]));//change for publishing
+            /*   // For Mac OS with SQLite
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlite(
+                    Configuration["ConnectionStrings:SQLiteConnection"]));
+
+                // For Linux with MariaDB
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseMySql(
+                    Configuration.GetConnectionString("ConnectionStrings:MySqlConnection")));
+            */
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, AppDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -60,7 +67,6 @@ namespace CommunitySite
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -74,6 +80,8 @@ namespace CommunitySite
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            context.Database.Migrate();
+            SeedData.Seed(context);
         }
     }
 }

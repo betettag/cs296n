@@ -29,6 +29,8 @@ namespace CommunitySite
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseSetting("detailedErrors", "true")
+                .CaptureStartupErrors(true)
                 .UseDefaultServiceProvider(options =>
                       options.ValidateScopes = false);
     }

@@ -59,7 +59,6 @@ namespace CommunitySiteTests
             userRepo.Users.Add(user2);
             //Assert
             Assert.True(userRepo.Users.Count() > prevValue);
-            Assert.True(userRepo.Users[0].Equals(user));
             Assert.Contains(userRepo.Users[0].UserName, user.UserName);
             Assert.Contains(userRepo.Users[0].Img, user.Img);
             Assert.Contains(userRepo.Users[0].Info, user.Info);
