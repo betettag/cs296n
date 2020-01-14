@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<User>
+@{
+    ViewData["Title"] = "C.O.D.E.C. Members";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    ViewBag.heading = "People";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Members</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/people.css">
+    <script src="~/js/site.js"></script>
+</head>
+<body>
+    @foreach (User member in Model)
+    {
+        <a href="#" class="list-group-item">
+            <div class="media">
+                <div class="pull-left">
+                    <img class="img-circle" src="@member.Img" alt="...">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">@member.UserName <small>@member.Info</small></h4>
+                    <div class="media-content">
+                        <i class="fa fa-map-marker"></i> @member.Address
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-skype"></i>Administrator: @member.Admin</li>
+                            <li><i class="fa fa-mobile"></i> @member.Phone</li>
+                            <li><i class="fa fa-envelope-o"></i> @member.Email</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+    <div class="container">
+        <br />
+        <br />
+        <br />
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Place>
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    ViewData["Title"] = "C.O.D.E.C. Meeting Places";
+    ViewBag.heading = "Places";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Important Places</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/people.css">
+    <script src="~/js/site.js"></script>
+</head>
+<body>
+    @foreach (Place p in Model)
+    {
+        <a href="@p.Map" class="list-group-item">
+            <div class="media">
+                <div class="pull-left">
+                    <img class="img-circle" src="@p.Img" alt="...">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">@p.Name <small>@p.Info</small></h4>
+                    <div class="media-content">
+                        <i class="fa fa-map-marker"></i> @p.Location
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-skype"></i>Click on this locaton to open map</li>
+                            <li><i class="fa fa-mobile"></i></li>
+                            <li><i class="fa fa-envelope-o"></i></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+</body>
+</html>

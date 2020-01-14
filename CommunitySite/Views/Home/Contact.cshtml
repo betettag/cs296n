@@ -1,0 +1,104 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+ @model Message 
+
+@{
+    ViewData["Title"] = "C.O.D.E.C. Contact Us";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width =device-width" />
+    <title>Contact an Administrator</title>
+    <!--<link rel="stylesheet" href="~/css/styles.css" />-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div class="container jumbotron">
+        <h4 class="text-center">Contact Us</h4>
+        
+        <p class="text-center">these are seen by the administrators of the site</p>
+        <form class="p-a-1" asp-action="RsvpForm" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="form-group">
+                <label asp-for="User">Your Name:</label>
+                <input class="input-xlarge form-control" asp-for="User" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Your email:</label>
+                <input class="input-xlarge form-control" asp-for="Email" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone">Your Phone:</label>
+                <input class="controls input-xlarge form-control" asp-for="Phone" />
+            </div>
+            <div class="control-group form-group form-horizontal">
+                <label class="control-label" asp-for="Address">Address:</label>
+                <div class="controls">
+                    <input asp-for="Address" placeholder="please enter an Oregon Adress"
+                           class="input-xlarge">
+                    <p class="help-block">*Add your Apartment, suite , unit, building, floor, etc.</p>
+                </div>
+            </div>
+            <!-- city input-->
+            <div class="control-group form-horizontal">
+                <label class="control-label">City / Town</label>
+                <div class="controls">
+                    <input id="city" name="city" type="text" placeholder="city" class="input-xlarge">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <!-- region input-->
+            <div class="control-group form-horizontal">
+                <label class="control-label">State</label>
+                <div class="controls">
+                    <input id="region" name="region" type="text" placeholder="state"
+                           class="input-xlarge">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <!-- postal-code input-->
+            <div class="control-group form-horizontal">
+                <label class="control-label">Zip / Postal Code</label>
+                <div class="controls">
+                    <input id="postal-code" name="postal-code" type="text" placeholder="zip code"
+                           class="input-xlarge">
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <!-- country select -->
+            <div class="control-group">
+                <label class="control-label">Country</label>
+                <div class="controls">
+                    <select id="country" name="country" class="input-xlarge">
+                        <option value="" selected="selected">(please select a country)</option>
+                        <option value="US">Merica</option>
+                        <option value="Other">Any other. Mexico probably</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Body">Enter your message here:</label>
+                <textarea class="form-control" asp-for="Body"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Are you already a member?</label>
+                <select asp-for="MemberCheck">
+                    <option value="">Choose an option</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit">Submit Message</button>
+            </div>
+        </form>
+        <a href="/Home/">Home</a>
+    </div>
+</body>
+</html>
+    

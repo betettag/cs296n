@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "C.O.D.E.C. Login";
+    ViewBag.back = true;
+}
+@model User
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://www.google.com/favicon.ico">
+
+    <title>Login to Post a Title</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/floating-labels/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/floating-labels.css" rel="stylesheet">
+</head>
+<body>
+    @Html.ValidationMessage("Validation")
+    <form class="form-signin" asp-action="Admin" method="post">
+        <div asp-validation-summary="All">
+            <div class="text-center mb-4">
+                <img class="mb-4" src="https://i.barkpost.com/wp-content/uploads/2018/10/346A4220-1.jpg" alt="logo" width="72" height="72">
+                <h1 class="h3 mb-3 font-weight-normal">Login to post a Topic</h1>
+                <p>Please login to continue.<br /> We dont want the so called troll,<br /> my grandson told me about to post.</p>
+            </div>
+
+            <div class="form-label-group">
+                <input asp-for="UserName" id="inputEmail4" class="form-control" placeholder="Username" required="" autofocus="">
+                <label for="inputEmail4" asp-for="UserName">Username: (admin) </label>
+            </div>
+
+            <div class="form-label-group">
+                <input asp-for="Pass" id="inputPassword4" class="form-control" placeholder="Password" required="">
+                <label for="inputPassword4" asp-for="Pass">Password: (pass)</label>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        </div>
+    </form>
+</body>
+</html>

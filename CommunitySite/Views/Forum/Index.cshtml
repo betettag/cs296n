@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Topic>
+@{
+    ViewData["Title"] = "C.O.D.E.C. Forum";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width =device-width" />
+    <title>Forum</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div class="container text-center">
+        <p class="text-left">
+            <h3>Forum</h3><br />
+            <a class="btn btn-primary" asp-controller="Forum" asp-action="Login">Click Here To Add a Topic</a>
+            @if (Model.Count() != 0)
+            {
+                @foreach (Topic t in Model)
+                {
+                    <h4>@t.Title</h4>
+                    @("Posted: " + t.PubDate) <br />
+                    @("Author: " + t.Author)<br />
+                    @("Message: " + t.Body) <br />
+                    <br />
+                    @if (t.Comments.Count != 0)
+                    {
+                        @(t.Comments.Count + " Replies: ")<br />
+                        //extra credit?
+                        
+                        @foreach (Message m in t.Comments)
+                        {
+                            @("User: " + m.User)<br />
+                            @("Date: " + m.PubDate) <br />
+                            @("Message: " + m.Body) <br />
+                            <hr />
+                        }
+                        string url = "NewMessage" + "?title=" + @t.Title;
+                        <a class="btn btn-primary" asp-route-title="@t.Title" asp-controller="Forum" asp-action="NewMessage">Comments</a>
+                    }
+                    else
+                    {
+                        @("No replies yet. Be the first One!")<br />
+                        string url = "Forum/NewMessage" + "?title=" + @t.Title;
+                        <a class="btn btn-primary" asp-route-title="@t.Title" asp-controller="Forum" asp-action="NewMessage">Comments</a>
+                        <!--<a class="btn btn-primary" href="@url">Comments</a>-->
+                    }
+                }
+            }
+
+            <br>
+        </p>
+    </div>
+    <div class="container">
+        <br />
+        <br />
+        <br />
+    </div>
+</body>
+</html>

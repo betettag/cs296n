@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "C.O.D.E.C. Home";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>C.O.D.E.C. Home</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+</head>
+<body>
+    <div class="text-center">
+        <h3><img src="https://i.barkpost.com/wp-content/uploads/2018/10/346A4220-1.jpg" alt="logo" height="250" width="400" /></h3>
+        <h4>Concerned Owners of Doggos Club of Eugene Community</h4>
+        <h4>C.O.D.E.C.</h4>
+        <p>
+            Meeting, and addressing your concerns since 1969.<br>
+            Except that one week where i went to the hospital.<br />
+            <h6>Number of Current Members: @ViewBag.memberCount</h6>
+            <h6>Newest Member is: @ViewBag.memberNew</h6>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Lab6
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-controller="Lab6" asp-action="GetStuckPart1">Click Here to Get Stuck!</a>
+                    <a class="dropdown-item" asp-controller="Lab6" asp-action="GetStucker">Getting Stuck 2: Getting Stucker</a>
+                    <a class="dropdown-item" asp-controller="Lab6" asp-action="GetStucker2">Getting 2 Stucker 3(404)</a>
+                    <a class="dropdown-item" asp-controller="Lab6" asp-action="GetStucker2" asp-route-flag="true">Getting 2 Stucker 3(OK)</a>
+                    <a class="dropdown-item" asp-controller="Lab6" asp-action="GetStucker4TheStuckening">Getting Stucker 4: The stuckening</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="https://www.chicagotribune.com/resizer/8yoALwU0WPtzgBVBbMloP7mgxfk=/1200x0/top/www.trbimg.com/img-5cf45ff2/turbine/ct-life-ok-sign-racist-05282019">Do not click</a>
+                </div>
+            </div>
+        </p>
+       
+    </div>
+</body>
+</html>
+

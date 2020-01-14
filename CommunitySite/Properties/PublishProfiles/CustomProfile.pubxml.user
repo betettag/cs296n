@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAXprS68K0bEajLu/utzGOpAAAAAACAAAAAAAQZgAAAAEAACAAAAC2fewGrBaccE9qcxp2z0WvEWuGJriHFJtsYRlcHW+WiQAAAAAOgAAAAAIAACAAAAC1WGiIgcdMDY8H5eRVNg96o9JXcVEmgznNjyJlV8Ff+yAAAABgYFWBOfSCEIuzZyyppisTxl14P972yHP+GfaTuQTd3kAAAACmlQ/DdAO0S4TTjIgzfsShdKmfoIzwFr9W26k/leep6cxQyCulGSbvLQjX9HySoHCWpIR0ao+zm3VxQs6qKDs2</EncryptedPassword>
+    <_PublishTargetUrl>ftp://ftp.site4now.net/site1</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>10/25/2019 16:38:09</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>10/25/2019 16:38:38</publishTime>
+    </File>
+    <File Include="CommunitySite.deps.json">
+      <publishTime>11/01/2019 23:09:07</publishTime>
+    </File>
+    <File Include="CommunitySite.dll">
+      <publishTime>11/01/2019 23:09:05</publishTime>
+    </File>
+    <File Include="CommunitySite.pdb">
+      <publishTime>11/01/2019 23:09:05</publishTime>
+    </File>
+    <File Include="CommunitySite.runtimeconfig.json">
+      <publishTime>11/01/2019 22:45:15</publishTime>
+    </File>
+    <File Include="CommunitySite.Views.dll">
+      <publishTime>11/01/2019 23:09:06</publishTime>
+    </File>
+    <File Include="Devart.Data.dll">
+      <publishTime>09/12/2019 03:13:56</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

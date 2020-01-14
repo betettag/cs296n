@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Message>
+@{
+    ViewBag.back = true;
+    ViewData["Title"] = "C.O.D.E.C. Admin Login";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width =device-width" />
+    <title>Admin Messages</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div class="container text-center">
+        <p class="text-left">
+            <h3>List of Responses:</h3><br />
+            <h3>Delete when read (to be added)</h3><br />
+            @foreach (Message response in Model)
+            {
+                @("Name: " + response.User)<br />
+                @("Member: " + response.MemberCheck) <br />
+                @("Date: " + response.PubDate)<br />
+                @("Message: " + response.Body) <br />
+                @("Address (ignore if not local): " + response.Address) <br />
+                <br />
+            }
+            <br>
+            <a href="/Home/">Home</a>
+
+            <a class="btn btn-primary" asp-controller="Forum" asp-action="Index">Click Here to go to the Forum</a>
+        </p>
+    </div>
+</body>
+</html>
