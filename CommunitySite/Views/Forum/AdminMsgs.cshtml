@@ -21,13 +21,13 @@
         <p class="text-left">
             <h3>List of Responses:</h3><br />
             <h3>Delete when read (to be added)</h3><br />
-            @foreach (Message response in Model)
+            @foreach (Message guestComment in Model)
             {
-                @("Name: " + response.User)<br />
-                @("Member: " + response.MemberCheck) <br />
-                @("Date: " + response.PubDate)<br />
-                @("Message: " + response.Body) <br />
-                @("Address (ignore if not local): " + response.Address) <br />
+                @("Name: " + guestComment.User)<br />
+                @("Member: " + guestComment.MemberCheck) <br />
+                @("Date: " + guestComment.PubDate)<br />
+                @("Message: " + guestComment.Body) <br />
+                @("Address (ignore if not local): " + guestComment.Address) <br />
                 <br />
             }
             <br>

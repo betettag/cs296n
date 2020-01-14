@@ -17,6 +17,7 @@
         @Html.ValidationMessage("LoginError")
         <form class="p-a-1" asp-action="NewTopic" method="post">
             <input asp-for="Author" hidden value="@Model.Author" />
+            <input asp-for="UserName" hidden value="@Model.Author.UserName" />
             <div asp-validation-summary="All"></div>
             <div class="form-group">
                 <label asp-for="Title">Title: </label>

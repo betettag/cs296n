@@ -18,15 +18,17 @@
         @Html.ValidationMessage("Valid User")
         <p>user:admin, pass:pass for a marked top reply</p>
         <form class="p-a-1" asp-action="NewMessage" method="post">
+            <!--<div asp-validation-summary="All"></div>-->
             <input asp-for="TopicTitle" hidden value="@Model.TopicTitle" />
+            <input asp-for="User" hidden value="@Model.Author.UserID" />
             <input asp-for="Phone" hidden value="1" />
             <input asp-for="Email" hidden value="test@test.com" />
             <input asp-for="Address" hidden value="1" />
             <input asp-for="MemberCheck" hidden value="@true" />
-            <div asp-validation-summary="All"></div>
+            <input asp-for="Author" hidden value="@Model.Author" />
             <div class="form-group">
-                <label asp-for="User">Username: </label>
-                <input class="form-control" asp-for="User" value="nonadmin" />
+                <label>Posting as: @Model.Author.UserName</label>
+                <!--input class="form-control" hidden asp-for="Author" value="@Model.Author" />-->
             </div>
             <div class="form-group">
                 <label asp-for="Body">Enter your message here:</label>

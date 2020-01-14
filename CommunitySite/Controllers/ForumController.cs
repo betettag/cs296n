@@ -4,6 +4,7 @@ using CommunitySite.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using CommunitySite.Repositories;
+using CommunitySite.ViewModels;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,45 +13,48 @@ namespace CommunitySite.Controllers
     public class ForumController : Controller
     {
         IUserRepo userRepo;
-        ITopicRepo topics;
-        IGuestRepo guestRepo;
-        [ActivatorUtilitiesConstructor]
-        public ForumController()
-        {
-            userRepo = new UserRepo();
-            topics = new TopicRepo();
-            guestRepo = new GuestRepo();
-        }
+        ITopicRepo topicRepo;
+        ICommentRepo commentRepo;
+        //[ActivatorUtilitiesConstructor]
 
-        public ForumController(IUserRepo u, ITopicRepo t, IGuestRepo g)
+
+        public ForumController(IUserRepo u, ITopicRepo t, ICommentRepo g)
         {
             userRepo = u;
-            topics = t;
-            guestRepo = g;
+            topicRepo = t;
+            commentRepo = g;
         }
-        public ViewResult Index()
+        public ViewResult Index(User user)
         {
-            topics.Topics.Sort((t1, t2) => (t1.PubDate).CompareTo(t1.PubDate)); //1b from lab3
-            for (int i = 0; i < topics.Topics.Count(); i++)
+            if (user.UserID == 0)
+                user = userRepo.Users[4];
+            topicRepo.Topics.Sort((t1, t2) => (t1.PubDate).CompareTo(t1.PubDate)); //1b from lab3
+            for (int i = 0; i < topicRepo.Topics.Count(); i++)
             {
-                topics.Topics[i].Comments = 
-                    (topics.Topics[i].Comments.OrderBy(m=>m.Important).ToList());
-                //t.Comments = t.Comments.OrderBy(m => m.Important ? true : false).ToList();
+                topicRepo.Topics[i] = topicRepo.GetComments(topicRepo.Topics[i].TopicID);
+                    //(topicRepo.Topics[i].Comments.OrderBy(m=>m.Important).ToList());
             }
-            return View(topics.Topics);
+            var viewModel = new ForumIndexViewModel();
+            viewModel.Topics = topicRepo.Topics;
+            viewModel.user = user;
+            return View(viewModel);
         }
-        public IActionResult Admin()
+        public IActionResult Admin(User user)
         {
+            if (user.UserID == 0)
+                user = userRepo.Users[4];
+            if (user.Admin ==true)
+                return View("AdminMsgs", commentRepo.Comments);
             return View("Admin");
         }
         [HttpPost]
-        public IActionResult Admin(User user)
+        public IActionResult AdminLogin(User user)
         {
             //for seeing messages from the contact page
             if (ModelState.IsValid && userRepo.IsAdmin(user.UserName))
             {
                 
-                return View("AdminMsgs", guestRepo.Responses);
+                return View("AdminMsgs", commentRepo.Comments);
             }
             else
             {
@@ -59,32 +63,31 @@ namespace CommunitySite.Controllers
                 return View("CheckUser");
             }
         }
-        [HttpPost]
-        public IActionResult NewTopic(Topic t)
-        {
-            if (ModelState.IsValid && t.Title != null) {
-                topics.AddTopic(t);
 
-                //getuser from topic in some way
-                return RedirectToAction("Index");//return user
-            }
+
+        public IActionResult NewTopicLogin(User user)
+        {
+            if (user.UserID == 0)
+                user = userRepo.Users[4];
+            if (user.Guest == true)
+                return View("CheckUser");
             else
-                return View("NewTopic",t);
-        }
-
-        public IActionResult Login()
-        {
-            return View("CheckUser");
+            {
+                Topic t = new Topic();
+                t.Author = user;
+                return View("NewTopic", t);
+            }
+                
         }
 
         [HttpPost]
-        public IActionResult Login(User user)
+        public IActionResult NewTopicValidation(User user)
         {
             //for seeing messages from the contact page
             if (ModelState.IsValid && userRepo.Exists(user.UserName))
             {
                 Topic t = new Topic();
-                t.Author = user.UserName;
+                t.Author = user;
                 
                 ModelState.AddModelError("ValidUser", "Hello "+user.UserName);
                 return View("NewTopic",t);
@@ -96,37 +99,72 @@ namespace CommunitySite.Controllers
                 return View("CheckUser");
             }
         }
-        public IActionResult NewMessage(string title)  //1a from lab3
-        {//addming a msg to a topic
-            Message m = new Message();
-            m.TopicTitle=HttpUtility.HtmlDecode(title);
-            try
+        [HttpPost]
+        public IActionResult NewTopic(Topic t)
+        {
+            if (t.Title != null && t.Body!=null)
             {
-                Topic topic = topics.GetTopicByTitle(title);
+                t.Author = userRepo.FindByUserName(t.UserName);
+                topicRepo.AddTopic(t);
+                return RedirectToAction("Index", new User());//return user
             }
-
-            catch
-            {
-                throw new Exception();
-            }
-
-            return View("NewMessage", m);
+            else
+                return View("NewTopic", t);
         }
         [HttpPost]
-        public IActionResult NewMessage(Message comment)
+        public IActionResult NewMsgValidation(User user)
         {
-            if (ModelState.IsValid && userRepo.Exists(comment.User))
+            ModelState.Remove("PageCount");
+            //for seeing messages from the contact page
+            if (ModelState.IsValid && userRepo.Exists(user.UserName))
             {
-                Topic topic = topics.GetTopicByTitle(comment.TopicTitle);
-                if (userRepo.IsAdmin(comment.User))
-                    comment.Important = true;
-                topics.AddComment(topic, comment);
-                return RedirectToAction("Index");
+                Message m = new Message();
+                string ReplyingTo = user.ReplyingTo;
+                user = userRepo.FindByUserName(user.UserName);
+                m.Author = user;//doesnt work, come back null in post
+                m.TopicTitle = ReplyingTo;//topic title to referece on database
+                m.User = user.UserID.ToString();//name to reference on database
+
+                ModelState.AddModelError("ValidUser", "Hello " + user.UserName);
+                return View("NewMessage", m);
             }
             else
             {
                 //there is a validation error
-                ModelState.AddModelError("LoginError", "Wrong username try(Dave)");
+                ModelState.AddModelError("LoginError", "Wrong username or pass");
+                return View("CheckUser",user);
+            }
+        }
+        public ViewResult NewMessage(User user)  //1a from lab3
+        {//addming a msg to a topic
+            if (user.UserID == 0)
+                user = userRepo.Users[4];
+            //User user = userRepo.Users[4];
+            //title = HttpUtility.HtmlEncode(title);
+            if (user.Guest != true)
+            {
+                Message m = new Message();
+                m.TopicTitle = user.ReplyingTo;
+                m.User = user.UserID.ToString();
+                m.Author = user;
+                return View("NewMessage", m);
+            }
+            //user.ReplyingTo = title;
+            return View("CheckUser2",user);
+        }
+        [HttpPost]
+        public IActionResult NewMessage(Message comment)
+        {
+            if (userRepo.Users.Exists(u => u.UserID == Int32.Parse(comment.User)) )
+            {
+                comment.Author = userRepo.Users.Find(u => u.UserID == Int32.Parse(comment.User));
+                commentRepo.AddComment(comment);
+                return RedirectToAction("Index", comment.Author);
+            }
+            else
+            {
+                //there is a validation error
+                ModelState.AddModelError("LoginError", "Wrong username try(admin or Dave)");
                 return View("NewMessage", comment);
             }
         }

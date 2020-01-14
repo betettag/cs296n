@@ -11,5 +11,6 @@ namespace CommunitySite.Repositories
         public DbSet<Topic> Topics { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Message> Comments { get; set; }
+        public DbSet<Place> Places { get; set; }
     }
 }
