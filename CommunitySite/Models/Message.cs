@@ -16,11 +16,8 @@ namespace CommunitySite.Models
             PubDate = DateTime.Now;
         }
         public int MessageID { get; set; }
-        [StringLength(100, MinimumLength = 2)]
         [Required(ErrorMessage = "Please enter your UserName/Name")]
         public string User { get; set; }
-        [DataType(DataType.Text)]
-        [Range(5, 230, ErrorMessage = "Please something meaningful")]
         [Required(ErrorMessage = "No message. if you dont put one then whats the point?")]
         public string Body { get; set; }
         [Required(ErrorMessage = "WE NEED TO KNOW WHERE YOU LIVE")]
