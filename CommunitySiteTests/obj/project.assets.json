@@ -10386,11 +10386,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySiteTests\\CommunitySiteTests.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySiteTests\\CommunitySiteTests.csproj",
       "projectName": "CommunitySiteTests",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySiteTests\\CommunitySiteTests.csproj",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySiteTests\\CommunitySiteTests.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySiteTests\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySiteTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -10409,8 +10409,8 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySite\\CommunitySite.csproj": {
-              "projectPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySite\\CommunitySite.csproj"
+            "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySite\\CommunitySite.csproj": {
+              "projectPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySite\\CommunitySite.csproj"
             }
           }
         }

@@ -9,13 +9,12 @@ namespace CommunitySite.Models
 {
     public class Message
     {
-
-        private UserRepo userRepo = new UserRepo();
         public Message()
         {
             PubDate = DateTime.Now;
         }
         public int MessageID { get; set; }
+        public User Author { get; set; }
         [Required(ErrorMessage = "Please enter your UserName/Name")]
         public string User { get; set; }
         [Required(ErrorMessage = "No message. if you dont put one then whats the point?")]
@@ -24,6 +23,7 @@ namespace CommunitySite.Models
         public string Address { get; set; }
         [Required(ErrorMessage = "Enter a phone please. I pinky swear we wont call")]
         public string Phone { get; set; }
+        [EmailAddress]
         [Required(ErrorMessage = "Please enter your email address")]
         [RegularExpression(".+\\@.+\\..+",
             ErrorMessage = "Please enter a valid email address")]

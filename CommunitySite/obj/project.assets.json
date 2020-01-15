@@ -13011,11 +13011,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySite\\CommunitySite.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySite\\CommunitySite.csproj",
       "projectName": "CommunitySite",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySite\\CommunitySite.csproj",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySite\\CommunitySite.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite\\CommunitySite\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\cs295n\\ASP.net-CommunitySite-acab4e844d651688837cf61ab225ce276a06f88c\\CommunitySite\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
