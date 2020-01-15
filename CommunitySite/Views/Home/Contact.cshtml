@@ -1,4 +1,4 @@
-﻿@*
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
@@ -18,18 +18,25 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 </head>
 <body>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+    
     <div class="container jumbotron">
         <h4 class="text-center">Contact Us</h4>
-        
+
         <p class="text-center">these are seen by the administrators of the site</p>
         <form class="p-a-1" asp-action="RsvpForm" method="post">
-            
-            <div asp-validation-summary="All"></div>
+
+            <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 @if (Model.Author.Guest == true)
                 {
                     <label asp-for="User">Your Name:</label>
-                    <input class="input-xlarge form-control" asp-for="User" value=""/>
+                    <div><span asp-validation-for="User"></span></div>
+                    <input class="input-xlarge form-control" asp-for="User" value="" />
                 }
                 else
                 {
@@ -40,14 +47,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Email">Your email:</label>
+                <div><span asp-validation-for="Email"></span></div>
                 <input class="input-xlarge form-control" asp-for="Email" />
             </div>
             <div class="form-group">
                 <label asp-for="Phone">Your Phone:</label>
+                <div><span asp-validation-for="Phone"></span></div>
                 <input class="controls input-xlarge form-control" asp-for="Phone" />
             </div>
             <div class="control-group form-group form-horizontal">
                 <label class="control-label" asp-for="Address">Address:</label>
+                <div><span asp-validation-for="Address"></span></div>
                 <div class="controls">
                     <input asp-for="Address" placeholder="please enter an Oregon Adress"
                            class="input-xlarge">
@@ -93,10 +103,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Body">Enter your message here:</label>
+                <div><span asp-validation-for="Body"></span></div>
                 <textarea class="form-control" asp-for="Body"></textarea>
             </div>
             <div class="form-group">
                 <label>Are you already a member?</label>
+                <div><span asp-validation-for="MemberCheck"></span></div>
                 <select asp-for="MemberCheck">
                     <option value="">Choose an option</option>
                     <option value="true">Yes</option>
@@ -111,4 +123,3 @@
     </div>
 </body>
 </html>
-    

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +23,7 @@ namespace CommunitySite.Models
         public string Address { get; set; }
         [Required(ErrorMessage = "Enter a phone please. I pinky swear we wont call")]
         public string Phone { get; set; }
+        [EmailAddress]
         [Required(ErrorMessage = "Please enter your email address")]
         [RegularExpression(".+\\@.+\\..+",
             ErrorMessage = "Please enter a valid email address")]
