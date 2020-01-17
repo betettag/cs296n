@@ -166,7 +166,8 @@ namespace CommunitySiteTests
             userRepo.AddUser(guest);
             var controller = new HomeController(userRepo, commentRepo);
             //Act
-            var index = controller.Index(new User() { }) as ViewResult;
+            string testing = " testing";
+            var index = controller.Index(testing) as ViewResult;
             //testing viewbag which one can retrieve with viewdata
             //really dont know why this works
 

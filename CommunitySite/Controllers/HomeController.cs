@@ -20,13 +20,15 @@ namespace CommunitySite.Controllers
             commentRepo = guests;
         }
 
-        public ViewResult Index(User user)
+        public ViewResult Index(string message)
         {
-            if (user.UserID == 0)
-                user = userRepo.Users[4];
+            
+            User user = userRepo.Users[4];
             ViewBag.memberCount = userRepo.Users.Count();
             userRepo.Users.Sort((u1, u2) => (u1.JoinDate).CompareTo(u1.JoinDate));
             ViewBag.memberNew = userRepo.Users.First().UserName;
+            if (message !=null)
+                ModelState.AddModelError("SucessfulPost", message);
             return View("Index",user);
         }
         [HttpGet]
@@ -85,20 +87,20 @@ namespace CommunitySite.Controllers
         }
 
         [HttpPost]
-        public ViewResult Contact(Message guestComment)
+        public RedirectToActionResult Contact(Message guestComment)
         {
             if (ModelState.IsValid)
             {
-                ModelState.AddModelError("SucessfulPost", "Your message has been successfully sent");
+                
                 if (guestComment.Author == null)
                     guestComment.Author = userRepo.Users.Find(u => u.Guest == true);
                 commentRepo.AddComment(guestComment);
-                return View("Contact",guestComment);
+                return RedirectToAction("Index", "Home",new { message = "Your message has been successfully sent" });
             }
             else
             {
                 //there is a validation error
-                return View("Contact",guestComment);
+                return RedirectToAction("Contact");
             }
         }
     }

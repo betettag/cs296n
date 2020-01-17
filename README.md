@@ -1,2 +1,4 @@
 # ASP.net-CommunitySite
-Lab1
+see the added docs folder for information about each branch
+
+master will have the latest working branch
