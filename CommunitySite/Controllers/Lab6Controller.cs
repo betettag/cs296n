@@ -10,7 +10,7 @@ namespace CommunitySite.Controllers
 {
     public class Lab6Controller : Controller
     {
-        public RedirectToActionResult User_Profile(User user)
+        public RedirectToActionResult User_Profile(AppUser user)
         {
             if (user.Guest == false)
                 return RedirectToAction("Profile",user);

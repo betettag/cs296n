@@ -21,8 +21,8 @@ namespace CommunitySiteTests
             topicRepo.Topics.Clear();
             userRepo.Users.Clear();
             commentRepo.Comments.Clear();
-            User user = new User();
-            user.UserName = "Test";
+            AppUser user = new AppUser();
+            user.Name = "Test";
             user.Img = "https://www.bootdey.com/img/Content/avatar/avatar3.png";
             user.Info = "old man. likes yelling at kids";
             user.Admin = true;
@@ -32,9 +32,9 @@ namespace CommunitySiteTests
             user.Address = "Eugene, Oregon";
             userRepo.Users.Add(user);
 
-            User a = new User(true)
+            AppUser a = new AppUser(true)
             {
-                UserName = "admin",
+                Name = "admin",
                 Pass = "pass",
                 Img = "https://www.bootdey.com/img/Content/avatar/avatar5.png",
                 Phone = "123-123 1234",
@@ -44,22 +44,22 @@ namespace CommunitySiteTests
             };
             userRepo.Users.Add(a);
 
-            User user2 = new User();
-            user2.UserName = "Test2";
+            AppUser user2 = new AppUser();
+            user2.Name = "Test2";
             user2.Admin = false;
             user2.Guest = true;
             userRepo.AddUser(user2);
 
-            User user3 = new User();
-            user3.UserName = "Test2";
+            AppUser user3 = new AppUser();
+            user3.Name = "Test2";
             user3.Admin = false;
             user3.Guest = false;
             userRepo.AddUser(user3);
 
             //Guest User to be used with guest responses
-            User guest = new User(false)
+            AppUser guest = new AppUser(false)
             {
-                UserName = "Guest",
+                Name = "Guest",
                 Guest = true,
                 Pass = "pass",
                 Phone = "123-123 1234",
@@ -129,7 +129,7 @@ namespace CommunitySiteTests
             ForumController forumController = new ForumController(userRepo, topicRepo, commentRepo);
             Message message = new Message();
             message.User = "1";
-            userRepo.Users[0].UserID = 1;
+            userRepo.Users[0].Id = "1";
             var prevValue = commentRepo.Comments.Count();
 
 
@@ -155,7 +155,7 @@ namespace CommunitySiteTests
             ArrangeTopics();
             ForumController forumController = new ForumController(userRepo, topicRepo, commentRepo);
 
-            userRepo.Users[0].UserID = 1;
+            //userRepo.Users[0].Id = "1";
             //Act
             var newMsg = forumController.NewMessage(userRepo.Users[0]) as ViewResult;
 
@@ -163,7 +163,7 @@ namespace CommunitySiteTests
             Assert.Equal(newMsg.Model.GetType(),new Message().GetType());
 
             //arrange
-            userRepo.Users[0].UserID = 0;
+            //userRepo.Users[0].Id = 0;
             //Act
             var newMsg2 = forumController.NewMessage(userRepo.Users[0]) as ViewResult;
 
@@ -178,7 +178,7 @@ namespace CommunitySiteTests
             ArrangeTopics();
             ForumController forumController = new ForumController(userRepo, topicRepo, commentRepo);
 
-            userRepo.Users[0].UserID = 1;
+            //userRepo.Users[0].UserID = 1;
             //Act
             var newMsg = forumController.NewMsgValidation(userRepo.Users[0]) as ViewResult;
 
@@ -187,7 +187,7 @@ namespace CommunitySiteTests
 
 
             //arrange
-            User user = new User();
+            AppUser user = new AppUser();
             //Act
             var newMsg2 = forumController.NewMsgValidation(user) as ViewResult;
 

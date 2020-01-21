@@ -13,7 +13,7 @@ namespace CommunitySiteTests
         public Topic CreateTopic()
         {
             //Arrange
-            User user = new User
+            AppUser user = new AppUser
             {
                 UserName = "testUser",
                 Pass = "pass",

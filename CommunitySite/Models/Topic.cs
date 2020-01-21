@@ -20,7 +20,7 @@ namespace CommunitySite.Models
         public DateTime PubDate { get; set; }
         public string UserName { set; get; }
 
-        public User Author { set; get; }
+        public AppUser Author { set; get; }
         public int UserID { set; get; }
         [Required(ErrorMessage = "No message. if you dont put one then whats the point")]
         public string Body { set; get; }

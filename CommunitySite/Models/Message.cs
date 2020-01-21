@@ -14,7 +14,7 @@ namespace CommunitySite.Models
             PubDate = DateTime.Now;
         }
         public int MessageID { get; set; }
-        public User Author { get; set; }
+        public AppUser Author { get; set; }
         [Required(ErrorMessage = "Please enter your UserName/Name")]
         public string User { get; set; }
         [Required(ErrorMessage = "No message. if you dont put one then whats the point?")]

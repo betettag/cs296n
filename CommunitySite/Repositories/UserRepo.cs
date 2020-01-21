@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using CommunitySite.Models;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
 
 namespace CommunitySite.Repositories
 {
@@ -17,15 +18,19 @@ namespace CommunitySite.Repositories
         {
             context = appDbContext;
         }
-        public List<User> Users => context.Users.ToList();
+        public List<AppUser> Users ()
+        {
+            List <AppUser> users = context.Users.ToList<AppUser>();
+            return users;
+        }
 
-        public void AddUser(User user)
+        public void AddUser(AppUser user)
         {
             context.Users.Add(user);
             context.SaveChanges();
         }
 
-        public User FindByUserName(string userName)
+        public AppUser FindByUserName(string userName)
         {
             return Users.Find(u => u.UserName == userName);
         }

@@ -4,28 +4,29 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CommunitySite.Models
 {
-    public class User
+    public class AppUser : IdentityUser
     {
-        public User(bool flag)
+        public AppUser(bool flag)
         {
             if (flag)
                 Admin = flag;
             JoinDate = DateTime.Now;
         }
-        public User()
+        public AppUser()
         {
             JoinDate = DateTime.Now;
         }
-        public int UserID { get; set; }
-        public string Email { get; set; }
+        //public int UserID { get; set; }
+        //public string Email { get; set; }
         public bool Guest { get; set; }
         public DateTime JoinDate { get; set; }
         public bool Admin { set; get; }
         [Required(ErrorMessage = "Please enter your Username")]
-        public string UserName { set; get; }
+        public string Name { set; get; }
         [Required(ErrorMessage = "Please enter your password")]
         public string Pass { set; get; }
         public string Img { get; set; }

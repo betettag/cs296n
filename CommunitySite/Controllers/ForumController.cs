@@ -24,9 +24,9 @@ namespace CommunitySite.Controllers
             topicRepo = t;
             commentRepo = g;
         }
-        public ViewResult Index(User user)
+        public ViewResult Index(AppUser user)
         {
-            if (user.UserID == 0)
+            if (user.Id == (0).ToString())
                 user = userRepo.Users[4];
             topicRepo.Topics.Sort((t1, t2) => (t1.PubDate).CompareTo(t1.PubDate)); //1b from lab3
             for (int i = 0; i < topicRepo.Topics.Count(); i++)
@@ -39,16 +39,16 @@ namespace CommunitySite.Controllers
             viewModel.user = user;
             return View(viewModel);
         }
-        public IActionResult Admin(User user)
+        public IActionResult Admin(AppUser user)
         {
-            if (user.UserID == 0)
+            if (user.Id == (0).ToString())
                 user = userRepo.Users[4];
             if (user.Admin ==true)
                 return View("AdminMsgs", commentRepo.Comments);
             return View("Admin");
         }
         [HttpPost]
-        public IActionResult AdminLogin(User user)
+        public IActionResult AdminLogin(AppUser user)
         {
             //for seeing messages from the contact page
             if (ModelState.IsValid && userRepo.IsAdmin(user.UserName))
@@ -65,9 +65,9 @@ namespace CommunitySite.Controllers
         }
 
 
-        public IActionResult NewTopicLogin(User user)
+        public IActionResult NewTopicLogin(AppUser user)
         {
-            if (user.UserID == 0)
+            if (user.Id == (0).ToString())
                 user = userRepo.Users[4];
             if (user.Guest == true)
                 return View("CheckUser");
@@ -81,7 +81,7 @@ namespace CommunitySite.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewTopicValidation(User user)
+        public IActionResult NewTopicValidation(AppUser user)
         {
             //for seeing messages from the contact page
             if (ModelState.IsValid && userRepo.Exists(user.UserName))
@@ -106,13 +106,13 @@ namespace CommunitySite.Controllers
             {
                 t.Author = userRepo.FindByUserName(t.UserName);
                 topicRepo.AddTopic(t);
-                return RedirectToAction("Index", new User());//return user
+                return RedirectToAction("Index", new AppUser());//return user
             }
             else
                 return View("NewTopic", t);
         }
         [HttpPost]
-        public IActionResult NewMsgValidation(User user)
+        public IActionResult NewMsgValidation(AppUser user)
         {
             ModelState.Remove("PageCount");
             //for seeing messages from the contact page
@@ -123,7 +123,7 @@ namespace CommunitySite.Controllers
                 user = userRepo.FindByUserName(user.UserName);
                 m.Author = user;//doesnt work, come back null in post
                 m.TopicTitle = ReplyingTo;//topic title to referece on database
-                m.User = user.UserID.ToString();//name to reference on database
+                m.User = user.Id.ToString();//name to reference on database
 
                 ModelState.AddModelError("ValidUser", "Hello " + user.UserName);
                 return View("NewMessage", m);
@@ -135,9 +135,9 @@ namespace CommunitySite.Controllers
                 return View("CheckUser",user);
             }
         }
-        public ViewResult NewMessage(User user)  //1a from lab3
+        public ViewResult NewMessage(AppUser user)  //1a from lab3
         {//addming a msg to a topic
-            if (user.UserID == 0)
+            if (user.Id == (0).ToString())
                 user = userRepo.Users[4];
             //User user = userRepo.Users[4];
             //title = HttpUtility.HtmlEncode(title);
@@ -145,7 +145,7 @@ namespace CommunitySite.Controllers
             {
                 Message m = new Message();
                 m.TopicTitle = user.ReplyingTo;
-                m.User = user.UserID.ToString();
+                m.User = user.Id;
                 m.Author = user;
                 return View("NewMessage", m);
             }
@@ -155,9 +155,9 @@ namespace CommunitySite.Controllers
         [HttpPost]
         public IActionResult NewMessage(Message comment)
         {
-            if (userRepo.Users.Exists(u => u.UserID == Int32.Parse(comment.User)) )
+            if (userRepo.Users.Exists(u => u.Id.Equals( Int32.Parse(comment.User))))
             {
-                comment.Author = userRepo.Users.Find(u => u.UserID == Int32.Parse(comment.User));
+                comment.Author = userRepo.Users.Find(u => u.Id.Equals(Int32.Parse(comment.User)));
                 commentRepo.AddComment(comment);
                 return RedirectToAction("Index", comment.Author);
             }

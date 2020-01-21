@@ -9,35 +9,38 @@ namespace CommunitySite.Repositories
 {
     public class FakeUserRepo : IUserRepo
     {
-        private static List<User> users = new List<User>();
+        private static List<AppUser> users = new List<AppUser>();
 
-        public List<User> Users => users;
+        public List<AppUser> Users() => users;
+
+        //List<AppUser> IUserRepo.Users { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public FakeUserRepo()
         {
         }
-        public void AddUser(User user)
+        public void AddUser(AppUser user)
         {
             if(user != null)
-                Users.Add(user);
+                users.Add(user);
         }
 
 
         public bool IsAdmin(string userName)
         {
-            if (Users.Exists(u => (u.UserName == userName && u.Admin == true)))
+            if (users.Exists(u => (u.UserName == userName && u.Admin == true)))
                 return true;
             return false;
         }
 
         public bool Exists(string userName)
         {
-            if (Users.Exists(x => x.UserName == userName))
+            if (users.Exists(x => x.UserName == userName))
                 return true;
             return false;
         }
-        public User FindByUserName(string userName)
+        public AppUser FindByUserName(string userName)
         {
-            return Users.Find(u => u.UserName == userName);
+            return users.Find(u => u.UserName == userName);
         }
     }
 }

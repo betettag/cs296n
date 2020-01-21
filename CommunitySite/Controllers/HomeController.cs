@@ -22,8 +22,8 @@ namespace CommunitySite.Controllers
 
         public ViewResult Index(string message)
         {
-            
-            User user = userRepo.Users[4];
+
+            AppUser user = userRepo.Users[4];
             ViewBag.memberCount = userRepo.Users.Count();
             userRepo.Users.Sort((u1, u2) => (u1.JoinDate).CompareTo(u1.JoinDate));
             ViewBag.memberNew = userRepo.Users.First().UserName;
@@ -32,7 +32,7 @@ namespace CommunitySite.Controllers
             return View("Index",user);
         }
         [HttpGet]
-        public IActionResult CreateUser(User user)//create user redirect
+        public IActionResult CreateUser(AppUser user)//create user redirect
         {
             if (ModelState.IsValid && userRepo.Exists(user.UserName))
             {
@@ -49,37 +49,37 @@ namespace CommunitySite.Controllers
             }
         }
 
-        public IActionResult Links(User user)
+        public IActionResult Links(AppUser user)
         {
-            if (user.UserID == 0)
+            if (user.Id == "0")
                 user = userRepo.Users[4];
             return View(user);
         }
-        public IActionResult Info(User user) {
-            if (user.UserID == 0)
+        public IActionResult Info(AppUser user) {
+            if (user.Id == "0")
                 user = userRepo.Users[4];
             return View("Info",user);
         }
-        public IActionResult Places(User user)
+        public IActionResult Places(AppUser user)
         {
-            if (user.UserID == 0)
+            if (user.Id == "0")
                 user = userRepo.Users[4];
             PlacesRepo repo = new PlacesRepo();
             PlacesRepo.Places.Sort((p1, p2) => string.Compare(p1.Name, p2.Name, StringComparison.Ordinal));
             //viewbag.mpnyhlyplace = Places[(int)DateTime.Now.Month];   
             return View("Places", PlacesRepo.Places);
         }
-        public IActionResult People(User user)
+        public IActionResult People(AppUser user)
         {
-            if (user.UserID == 0)
+            if (user.Id == "0")
                 user = userRepo.Users[4];
             userRepo.Users.Sort((u1, u2) => string.Compare(u1.UserName, u2.UserName, StringComparison.Ordinal));
             return View("People", userRepo.Users);
         }
 
-        public IActionResult Contact(User user)
+        public IActionResult Contact(AppUser user)
         {
-            if (user.UserID == 0)
+            if (user.Id == "0")
                 user = userRepo.Users.Find(u => u.Guest == true);
             Message guestComment = new Message();
             guestComment.Author = user;

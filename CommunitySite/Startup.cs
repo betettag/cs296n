@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 namespace CommunitySite
 {
@@ -34,7 +35,9 @@ namespace CommunitySite
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
+                       .AddDefaultTokenProviders();
 
             // Inject our repositories into our controllers
             services.AddTransient<ITopicRepo, TopicRepo>();
@@ -82,6 +85,7 @@ namespace CommunitySite
             });
             context.Database.Migrate();
             SeedData.Seed(context);
+            app.UseAuthentication();
         }
     }
 }

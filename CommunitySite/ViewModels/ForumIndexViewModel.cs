@@ -8,7 +8,7 @@ namespace CommunitySite.ViewModels
 {
     public class ForumIndexViewModel
     {
-        public User user { get; set; }
+        public AppUser user { get; set; }
         public List<Topic> Topics { get; set; }
     }
 }

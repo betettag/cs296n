@@ -23,7 +23,7 @@ namespace CommunitySiteTests
             topicRepo.Topics.Clear();
             userRepo.Users.Clear();
             commentRepo.Comments.Clear();
-            User user = new User();
+            AppUser user = new AppUser();
             user.UserName = "Test";
             user.Img = "https://www.bootdey.com/img/Content/avatar/avatar3.png";
             user.Info = "old man. likes yelling at kids";
@@ -34,7 +34,7 @@ namespace CommunitySiteTests
             user.Address = "Eugene, Oregon";
             userRepo.Users.Add(user);
 
-            User a = new User(true)
+            AppUser a = new AppUser(true)
             {
                 UserName = "admin",
                 Pass = "pass",
@@ -46,20 +46,20 @@ namespace CommunitySiteTests
             };
             userRepo.Users.Add(a);
 
-            User user2 = new User();
+            AppUser user2 = new AppUser();
             user2.UserName = "Test2";
             user2.Admin = false;
             user2.Guest = true;
             userRepo.AddUser(user2);
 
-            User user3 = new User();
+            AppUser user3 = new AppUser();
             user3.UserName = "Test2";
             user3.Admin = false;
             user3.Guest = false;
             userRepo.AddUser(user3);
 
             //Guest User to be used with guest responses
-            User guest = new User(false)
+            AppUser guest = new AppUser(false)
             {
                 UserName = "Guest",
                 Guest = true,
@@ -116,7 +116,7 @@ namespace CommunitySiteTests
             topicRepo.Topics.Clear();
             userRepo.Users.Clear();
             commentRepo.Comments.Clear();
-            User user = new User();
+            AppUser user = new AppUser();
             user.UserName = "Test";
             user.Img = "https://www.bootdey.com/img/Content/avatar/avatar3.png";
             user.Info = "old man. likes yelling at kids";
@@ -127,7 +127,7 @@ namespace CommunitySiteTests
             user.Address = "Eugene, Oregon";
             userRepo.Users.Add(user);
 
-            User a = new User(true)
+            AppUser a = new AppUser(true)
             {
                 UserName = "admin",
                 Pass = "pass",
@@ -139,20 +139,20 @@ namespace CommunitySiteTests
             };
             userRepo.Users.Add(a);
 
-            User user2 = new User();
+            AppUser user2 = new AppUser();
             user2.UserName = "Test2";
             user2.Admin = false;
             user2.Guest = true;
             userRepo.AddUser(user2);
 
-            User user3 = new User();
+            AppUser user3 = new AppUser();
             user3.UserName = "Test2";
             user3.Admin = false;
             user3.Guest = false;
             userRepo.AddUser(user3);
 
             //Guest User to be used with guest responses
-            User guest = new User(false)
+            AppUser guest = new AppUser(false)
             {
                 UserName = "Guest",
                 Guest = true,
@@ -184,7 +184,7 @@ namespace CommunitySiteTests
             string firstPlace = PlacesRepo.Places.First().Name;
             HomeController homeController = new HomeController(userRepo, commentRepo);
             //Act
-            homeController.Places(new User());
+            homeController.Places(new AppUser());
             //Assert
             Assert.False(PlacesRepo.Places.First().Name == firstPlace);
         }
@@ -195,7 +195,7 @@ namespace CommunitySiteTests
             ArrangeTopics();
             HomeController homeController = new HomeController(userRepo, commentRepo);
             //Act
-            homeController.People(new User());
+            homeController.People(new AppUser());
             //Assert
             //Assert.False(PlacesRepo.Places.GetHashCode().ToString() == prevValue);
             Assert.True(userRepo.Users.First().UserName == userRepo.Users[0].UserName);
