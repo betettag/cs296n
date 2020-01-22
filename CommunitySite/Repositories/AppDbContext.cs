@@ -10,7 +10,7 @@ namespace CommunitySite.Repositories
            DbContextOptions<AppDbContext> options) : base(options) { }
         public AppDbContext() : base() { }
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<AppUser> AppUsers { get; set; }
+        //public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Message> Comments { get; set; }
         public DbSet<Place> Places { get; set; }
     }

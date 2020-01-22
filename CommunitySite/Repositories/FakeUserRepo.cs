@@ -11,7 +11,7 @@ namespace CommunitySite.Repositories
     {
         private static List<AppUser> users = new List<AppUser>();
 
-        public List<AppUser> Users() => users;
+        public List<AppUser> Users => users;
 
         //List<AppUser> IUserRepo.Users { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

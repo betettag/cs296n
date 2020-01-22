@@ -12,7 +12,7 @@ namespace CommunitySite.Repositories
         {
             if (!context.Users.Any())
             {
-                User user = new User();
+                AppUser user = new AppUser();
                 user.UserName = "Jave";
                 user.Img = "https://www.bootdey.com/img/Content/avatar/avatar3.png";
                 user.Info = "old man. likes yelling at kids";
@@ -23,7 +23,7 @@ namespace CommunitySite.Repositories
                 user.Pass = "test";
                 context.Users.Add(user);
 
-                User user2 = new User();
+                AppUser user2 = new AppUser();
                 user2.UserName = "Dave";
                 user2.Img = "https://www.bootdey.com/img/Content/avatar/avatar1.png";
                 user2.Info = "old man. likes yelling at kids";
@@ -33,7 +33,7 @@ namespace CommunitySite.Repositories
                 user2.Address = "Eugene, Oregon";
                 user2.Pass = "test";
                 context.Users.Add(user2);
-                User user3 = new User();
+                AppUser user3 = new AppUser();
                 user3.UserName = "Name";
                 user3.Img = "https://www.bootdey.com/img/Content/avatar/avatar6.png";
                 user3.Info = "old man. likes yelling at kids";
@@ -45,7 +45,7 @@ namespace CommunitySite.Repositories
                 context.Users.Add(user3);
 
 
-                User a = new User(true)
+                AppUser a = new AppUser(true)
                 {
                     UserName = "admin",
                     Pass = "pass",
@@ -58,7 +58,7 @@ namespace CommunitySite.Repositories
                 context.Users.Add(a);
 
                 //Guest User to be used with guest responses
-                User testUser = new User(false)
+                AppUser testUser = new AppUser(false)
                 {
                     UserName = "Guest",
                     Guest = true,
@@ -84,7 +84,7 @@ namespace CommunitySite.Repositories
                 Message message = new Message()
                 {
                     Body = "seed data comment",
-                    User = testUser.UserID.ToString(),
+                    User = testUser.Id.ToString(),
                     Author = testUser,
                     Address = "test",
                     Email = testUser.Email,

@@ -9,7 +9,7 @@ namespace CommunitySite.Repositories
 {
     public interface IUserRepo
     {
-        List<AppUser> Users();
+        List<AppUser> Users { get; }
 
         bool IsAdmin(string userName);//validation for if user is admin
 

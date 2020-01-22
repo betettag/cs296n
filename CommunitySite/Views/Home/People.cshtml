@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model List<User>
+@model IEnumerable<AppUser>
 @{
     ViewData["Title"] = "C.O.D.E.C. Members";
     Layout = "~/Views/Shared/_Layout2.cshtml";
@@ -20,7 +20,7 @@
     <script src="~/js/site.js"></script>
 </head>
 <body>
-    @foreach (User member in Model)
+    @foreach (AppUser member in Model)
     {
         <a href="#" class="list-group-item">
             <div class="media">

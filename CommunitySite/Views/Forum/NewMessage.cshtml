@@ -20,7 +20,7 @@
         <form class="p-a-1" asp-action="NewMessage" method="post">
             <!--<div asp-validation-summary="All"></div>-->
             <input asp-for="TopicTitle" hidden value="@Model.TopicTitle" />
-            <input asp-for="User" hidden value="@Model.Author.UserID" />
+            <input asp-for="User" hidden value="@Model.Author.Id" />
             <input asp-for="Phone" hidden value="1" />
             <input asp-for="Email" hidden value="test@test.com" />
             <input asp-for="Address" hidden value="1" />

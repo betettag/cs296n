@@ -7,6 +7,7 @@ using CommunitySite.Models;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Microsoft.AspNetCore.Identity;
 
 namespace CommunitySite.Repositories
 {
@@ -18,11 +19,8 @@ namespace CommunitySite.Repositories
         {
             context = appDbContext;
         }
-        public List<AppUser> Users ()
-        {
-            List <AppUser> users = context.Users.ToList<AppUser>();
-            return users;
-        }
+        private readonly UserManager<AppUser> userManager; //this is wrong and i need to move code to the admin controller
+        public List<AppUser> Users => userManager.Users.ToList();
 
         public void AddUser(AppUser user)
         {

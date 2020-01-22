@@ -35,7 +35,7 @@ namespace CommunitySite
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
                        .AddDefaultTokenProviders();
 

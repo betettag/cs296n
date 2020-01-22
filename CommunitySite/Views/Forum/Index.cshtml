@@ -39,7 +39,7 @@
                         }
                         //string url = "/Forum/NewMessage" + "?title=" + @t.Title;
                         Model.user.ReplyingTo = t.TopicID.ToString();
-                        User user = Model.user;
+                        AppUser user = Model.user;
                         <a class="btn btn-primary" href="@Url.Action("NewMessage", "Forum", user)">
                             Add a comment
                         </a>
@@ -50,7 +50,7 @@
                         @("No replies yet. Be the first One!")<br />
                         string url = "/Forum/NewMessage" + "?title=" + @t.Title;
                         Model.user.ReplyingTo = t.TopicID.ToString();
-                        User user = Model.user;
+                        AppUser user = Model.user;
                         <!--<a class="btn btn-primary" asp-route-user="@user" asp-route-topic="@t" asp-controller="Forum" asp-action="NewMessage">Add a Comment</a>
                         -->
                         <a class="btn btn-primary" href="@Url.Action("NewMessage", "Forum", user)">

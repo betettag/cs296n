@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace CommunitySite.Models
 {
